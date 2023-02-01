@@ -3,7 +3,7 @@
 ![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)
 
 # Modulator plugin for MuseScore 4
-Looking for Modulator for MuseScore 3 ? It's [here](https://github.com/madjyc/Modulator_MuseScore3).
+Looking for **Modulator for MuseScore 3** ? It's [here](https://github.com/madjyc/Modulator_MuseScore3).
 
 **Choose a single note or a chord, then let the plugin find all the chords (triads or seventh chords) in all keys and scales that share at least 1 note with it** (see "Hints" below).
 
