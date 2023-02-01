@@ -1,3 +1,7 @@
+![MuseScore Version](https://img.shields.io/badge/musescore-4-orange.svg)
+![License](https://img.shields.io/badge/license-GPL-green.svg)
+![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)
+
 # Modulator plugin for MuseScore 4
 
 **Choose a single note or a chord, then let the plugin find all the chords (triads or seventh chords) in all keys and scales that share at least 1 note with it** (see "Hints" below).
