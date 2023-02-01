@@ -15,9 +15,7 @@
 2. Open a score.
 3. Run Modulator from the **Plugins > Composing/arranging tools** menu.
 4. Select the root note and type of the chord (or single note) you want to submit.
-
    Check **Triads** if you want to search for triads, or **7ths** if you want to search for seventh chords.
-   
    Check **Strict** if you want the results to include all the notes of your chord, uncheck if you want the results to include at least 1 note from your chord.
 5. Click on the <kbd>Search</kbd> button.
 
