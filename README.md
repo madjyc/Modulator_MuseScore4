@@ -1,6 +1,6 @@
 ![MuseScore Version](https://img.shields.io/badge/musescore-4-orange.svg)
 ![License](https://img.shields.io/badge/license-GPL-green.svg)
-![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-v1.1.0-blue.svg)
 
 # Modulator plugin for MuseScore 4
 Looking for **Modulator for MuseScore 3** ? It's [here](https://github.com/madjyc/Modulator_MuseScore3).
