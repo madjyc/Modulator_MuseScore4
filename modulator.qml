@@ -19,7 +19,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 
 MuseScore {
-    version: "1.0.0"
+    version: "1.1.0"
     pluginType: "dialog"
     description: "Choose a single note or a chord, then let the plugin find all the chords (triads or seventh chords) in all keys and scales that share at least 1 note with it."
     width: 640
@@ -156,36 +156,21 @@ MuseScore {
             ["i7", "ii7", "III+7", "IV7", "V7", "viø7", "viiø7",], // melodic minor
         ];
         
-        var circleOfFifths12 = {
-            "major": [
-                ["C"],
-                ["C♯", "D♭"],
-                ["D"],
-                ["E♭"],
-                ["E"],
-                ["F"],
-                ["F♯", "G♭"],
-                ["G"],
-                ["A♭"],
-                ["A"],
-                ["B♭"],
-                ["B", "C♭"],
-            ],
-            "minor": [
-                ["C"],
-                ["C♯"],
-                ["D"],
-                ["D♯", "E♭"],
-                ["E"],
-                ["F"],
-                ["F♯"],
-                ["G"],
-                ["G♯", "A♭"],
-                ["A"],
-                ["A♯", "B♭"],
-                ["B"],
-            ],
-        };
+        // Each key is represented as major and minor.
+        var circleOfFifths12 = [
+            ["C"],
+            ["C♯", "D♭"],
+            ["D"],
+            ["D♯", "E♭"],
+            ["E"],
+            ["F"],
+            ["F♯", "G♭"],
+            ["G"],
+            ["G♯", "A♭"],
+            ["A"],
+            ["A♯", "B♭"],
+            ["B", "C♭"],
+        ];
         
         var textColors = {
             "normal_dark":    "#093756",
@@ -239,16 +224,13 @@ MuseScore {
                 // Gets the relative notes of the mode (e.g. [0, 2, 4, 5, 7, 9, 11]).
                 var scale_mode_notes12 = scaleModeNotes12[scale_mode_index];
                 
-                // Gets the 12 keys of this mode in circleOfFifths12.
-                var circle_of_fifths = circleOfFifths12[scale_mode_name.slice(-5)]; // scale_mode_name.slice(-5) is either "major" or "minor"
-                
-                // Considers each key from circle_of_fifths (some have multiple names).
-                for (var scale_key_index = 0; scale_key_index < circle_of_fifths.length; scale_key_index++) {
+                // Considers each key from circleOfFifths12 (some have multiple names).
+                for (var scale_key_index = 0; scale_key_index < circleOfFifths12.length; scale_key_index++) {
                     // Determines the note positions of the current scale mode in the current key (e.g. ["C♯", "D♭"] -> [1, 3, 5, 6, 8, 10, 0]).
                     var scale_notes12 = offsetNotes12(scale_key_index, scale_mode_notes12)
                     
                     // Gets all possible names of the current key from scale_key_index (e.g. ["C♯", "D♭"] in major mode).
-                    var scale_key_names = circle_of_fifths[scale_key_index];
+                    var scale_key_names = circleOfFifths12[scale_key_index];
                     
                     // Finds the name of each note of the current scale depending on the name of its root note (e.g. ["C♯", "D♭"] -> "C♯" then "D♭").
                     var scale_real_note_names = [];
