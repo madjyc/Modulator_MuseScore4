@@ -19,7 +19,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 
 MuseScore {
-    version: "1.1.0"
+    version: "1.1.1"
     pluginType: "dialog"
     description: "Choose a single note or a chord, then let the plugin find all the chords (triads or seventh chords) in all keys and scales that share at least 1 note with it."
     width: 640
@@ -173,6 +173,7 @@ MuseScore {
         ];
         
         var textColors = {
+            "normal":         "#030303",
             "normal_dark":    "#093756",
             "normal_medium":  "#457596",
             "normal_light":   "#87aeca",
@@ -195,13 +196,13 @@ MuseScore {
             var chord_root_note12_names = note12NamesStd[chord_root_note12];
             
             // Starting with each possible name for the root note, find and display the name of the other notes of the chord.
-            var message = "Your chord: ";
+            var message = makeColorString("Your chord: ", "normal");
             for (var n = 0; n < chord_root_note12_names.length; n++) {
                 if (n > 0) {
-                    message += " or ";
+                    message += makeColorString(" or ", "normal");
                 }
                 var chord_real_note_names = getChordRealNoteNames(chord_notes12, chord_root_note12_names[n], chord_step); // e.g. "C♯" then "D♭").
-                message += "<b><span style='color:" + textColors["hilight_dark"] + ";'>" + chord_root_note12_names[n] + chordTypeNames[chord_type] + "</span></b> " + noteNamesToString(chord_real_note_names);
+                message += "<b>" + makeColorString(chord_root_note12_names[n] + chordTypeNames[chord_type], "hilight_dark") + "</b> " + makeColorString(noteNamesToString(chord_real_note_names), "normal");
             }
             outputText.text = message;
         }
@@ -255,11 +256,11 @@ MuseScore {
                             results_found = true;
                             // Displays the key (e.g. "In C♯ or D♭ major:").
                             if (!key_already_displayed) {
-                                message = "<p><br>In <b><span style='color:" + textColors["hilight_dark"] + ";'>" + scale_key_names[0] + " " + scale_mode_name + "</span></b> " + noteNamesToHtml(chord_notes12, scale_real_note_names[0]);
+                                message = "<p><br>" + makeColorString("In ", "normal") + "<b>" + makeColorString(scale_key_names[0] + " " + scale_mode_name, "hilight_dark") + "</b> " + makeColorString(noteNamesToHtml(chord_notes12, scale_real_note_names[0]), "normal");
                                 if (scale_key_names.length > 1) {
-                                    message += "<br>or <b><span style='color:" + textColors["hilight_dark"] + ";'>" + scale_key_names[1] + " " + scale_mode_name + "</span></b> " + noteNamesToHtml(chord_notes12, scale_real_note_names[1]);
+                                    message += "<br>" + makeColorString("or ", "normal") + "<b>" + makeColorString(scale_key_names[1] + " " + scale_mode_name, "hilight_dark") + "</b> " + makeColorString(noteNamesToHtml(chord_notes12, scale_real_note_names[1]), "normal");
                                 }
-                                message += ":</p>";
+                                message += makeColorString(":", "normal") + "</p>";
                                 outputText.text = outputText.text + message;
                                 message = "";
                                 key_already_displayed = true;
@@ -311,7 +312,7 @@ MuseScore {
                 }
             }
             if (!results_found) {
-                outputText.text = outputText.text + "<p><b>No results found.</b></p>";
+                outputText.text = outputText.text + "<p><b>" + makeColorString("No results found.", "normal") + "</b></p>";
             }
         }
         
@@ -527,6 +528,10 @@ MuseScore {
             
             return str;
         }
+        
+        function makeColorString(text, color_type) {
+            return "<span style='color:" + textColors[color_type] + ";'>" + text + "</span>";
+        }
     }
 
     // Searching for triads (3) or seventh chords (4).
@@ -707,10 +712,13 @@ MuseScore {
             TextArea {
                 id: outputText
                 readOnly: true
-                text: "<b>Choose a single note or a chord, then find all the chords (triads or seventh chords) in all keys and scales that include that or those notes.</b><br>" +
-                      "The 'Strict' option indicates whether you want to find chords that strictly or partially share your chord.<br>" +
+                text: "<p style='color:#333;'><b>Choose a single note or a chord, then find all the chords (triads or seventh chords) in all keys and scales that include that or those notes.</b><br>" +
+                      "The 'Strict' option indicates whether you want to find chords that strictly or partially share your chord.<br></p>" +
                       "<p style='color:#457596;'>Now select the root note and type of a chord.<br>Then click on <b>Search</b>.</p>"
                 textFormat: TextEdit.RichText
+                style: TextAreaStyle {
+                    backgroundColor: "#eee"
+                }
                 Layout.fillHeight: true
                 Layout.fillWidth: true
             }
